@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %} Editer un GENRE (WTF) {% endblock %}
+{% block title %} Editer une personne (WTF) {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Editer un GENRE
+				Editer une personne
 			</p>
 			<form action="" method="POST" novalidate>
 				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
@@ -19,9 +19,30 @@
 						{% endfor %}
 					</p>
 					<p>
-						{{ form_update.date_genre_wtf_essai.label }}<br>
-						{{ form_update.date_genre_wtf_essai(size=32) }}<br>
-						{% for error in form_update.date_genre_wtf_essai.errors %}
+						{{ form_update.prenom_pers_update_wtf.label }}<br>
+						{{ form_update.prenom_pers_update_wtf(size=32) }}<br>
+						{% for error in form_update.prenom_pers_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_update.birth_date_pers_update_wtf.label }}<br>
+						{{ form_update.birth_date_pers_update_wtf(size=32) }}<br>
+						{% for error in form_update.birth_date_pers_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_update.gender_pers_update_wtf.label }}<br>
+						{{ form_update.gender_pers_update_wtf(size=32) }}<br>
+						{% for error in form_update.gender_pers_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_update.nationality_pers_update_wtf.label }}<br>
+						{{ form_update.nationality_pers_update_wtf(size=32) }}<br>
+						{% for error in form_update.nationality_pers_update_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>

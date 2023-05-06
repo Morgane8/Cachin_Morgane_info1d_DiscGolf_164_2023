@@ -20,8 +20,8 @@ from APP_FILMS_164.erreurs.exceptions import *
     
     But : Afficher les films avec les genres associés pour chaque film.
     
-    Paramètres : id_genre_sel = 0 >> tous les films.
-                 id_genre_sel = "n" affiche le film dont l'id est "n"
+    Paramètres : id_person_sel = 0 >> tous les films.
+                 id_person_sel = "n" affiche le film dont l'id est "n"
                  
 """
 
