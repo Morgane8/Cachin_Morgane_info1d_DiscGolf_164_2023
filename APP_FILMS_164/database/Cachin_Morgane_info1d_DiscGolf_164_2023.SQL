@@ -30,10 +30,27 @@ USE Cachin_Morgane_info1d_DiscGolf_164_2023;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
+-- Export de la structure de la base pour disc_golf_164
+CREATE DATABASE IF NOT EXISTS `disc_golf_164` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `disc_golf_164`;
 
+-- Export de la structure de la table disc_golf_164. t_pers_possess_disc
+CREATE TABLE IF NOT EXISTS `t_pers_possess_disc` (
+  `id_pers_possess_disc` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_person` int(11) DEFAULT NULL,
+  `fk_disc` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_pers_possess_disc`),
+  KEY `FK_t_pers_possess_disc_t_person` (`fk_person`),
+  KEY `FK_t_pers_possess_disc_t_disc` (`fk_disc`),
+  CONSTRAINT `FK_t_pers_possess_disc_t_person` FOREIGN KEY (`fk_person`) REFERENCES `t_person` (`id_person`),
+  CONSTRAINT `FK_t_pers_possess_disc_t_disc` FOREIGN KEY (`fk_disc`) REFERENCES `t_disc` (`id_disc`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Export de données de la table disc_golf_164.t_pers_possess_disc : ~0 rows (environ)
+/*!40000 ALTER TABLE `t_pers_possess_disc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_pers_possess_disc` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_adress
-DROP TABLE IF EXISTS `t_adress`;
 CREATE TABLE IF NOT EXISTS `t_adress` (
   `id_adress` int(11) NOT NULL AUTO_INCREMENT,
   `name_adress` varchar(50) NOT NULL,
@@ -47,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `t_adress` (
 /*!40000 ALTER TABLE `t_adress` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_adress_belong_state
-DROP TABLE IF EXISTS `t_adress_belong_state`;
 CREATE TABLE IF NOT EXISTS `t_adress_belong_state` (
   `id_adress_belong_state` int(11) NOT NULL AUTO_INCREMENT,
   `fk_adress` int(11) DEFAULT NULL,
@@ -65,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `t_adress_belong_state` (
 /*!40000 ALTER TABLE `t_adress_belong_state` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_country
-DROP TABLE IF EXISTS `t_country`;
 CREATE TABLE IF NOT EXISTS `t_country` (
   `id_country` int(11) NOT NULL AUTO_INCREMENT,
   `name_country` varchar(50) NOT NULL,
@@ -77,21 +92,21 @@ CREATE TABLE IF NOT EXISTS `t_country` (
 /*!40000 ALTER TABLE `t_country` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_disc
-DROP TABLE IF EXISTS `t_disc`;
 CREATE TABLE IF NOT EXISTS `t_disc` (
   `id_disc` int(11) NOT NULL AUTO_INCREMENT,
-  `weight_disc` varchar(50) NOT NULL,
-  `colour_disc` varchar(50) NOT NULL,
+  `weight_disc` varchar(50) DEFAULT NULL,
+  `colour_disc` varchar(50) DEFAULT NULL,
   `stamp_disc` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_disc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Export de données de la table disc_golf_164.t_disc : ~0 rows (environ)
 /*!40000 ALTER TABLE `t_disc` DISABLE KEYS */;
+INSERT INTO `t_disc` (`id_disc`, `weight_disc`, `colour_disc`, `stamp_disc`) VALUES
+	(1, '150', 'yellow', 'walkabout');
 /*!40000 ALTER TABLE `t_disc` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_login
-DROP TABLE IF EXISTS `t_login`;
 CREATE TABLE IF NOT EXISTS `t_login` (
   `id_login` int(11) NOT NULL AUTO_INCREMENT,
   `username_login` varchar(50) NOT NULL,
@@ -105,7 +120,6 @@ CREATE TABLE IF NOT EXISTS `t_login` (
 /*!40000 ALTER TABLE `t_login` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_mail
-DROP TABLE IF EXISTS `t_mail`;
 CREATE TABLE IF NOT EXISTS `t_mail` (
   `id_mail` int(11) NOT NULL AUTO_INCREMENT,
   `adress_mail` varchar(50) NOT NULL,
@@ -117,7 +131,6 @@ CREATE TABLE IF NOT EXISTS `t_mail` (
 /*!40000 ALTER TABLE `t_mail` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_national_license
-DROP TABLE IF EXISTS `t_national_license`;
 CREATE TABLE IF NOT EXISTS `t_national_license` (
   `id_license` int(11) NOT NULL AUTO_INCREMENT,
   `swiss_license` varchar(50) NOT NULL,
@@ -130,7 +143,6 @@ CREATE TABLE IF NOT EXISTS `t_national_license` (
 /*!40000 ALTER TABLE `t_national_license` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_pdga
-DROP TABLE IF EXISTS `t_pdga`;
 CREATE TABLE IF NOT EXISTS `t_pdga` (
   `id_PDGA` int(11) NOT NULL AUTO_INCREMENT,
   `number_PDGA` int(11) NOT NULL,
@@ -142,14 +154,13 @@ CREATE TABLE IF NOT EXISTS `t_pdga` (
 /*!40000 ALTER TABLE `t_pdga` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_person
-DROP TABLE IF EXISTS `t_person`;
 CREATE TABLE IF NOT EXISTS `t_person` (
   `id_person` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name_pers` varchar(50) NOT NULL,
-  `last_name_pers` varchar(50) NOT NULL,
-  `birth_date_pers` date NOT NULL,
+  `first_name_pers` varchar(50) DEFAULT NULL,
+  `last_name_pers` varchar(50) DEFAULT NULL,
+  `birth_date_pers` date DEFAULT NULL,
   `gender_pers` varchar(50) DEFAULT NULL,
-  `nationality_pers` varchar(50) NOT NULL,
+  `nationality_pers` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_person`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -160,7 +171,6 @@ INSERT INTO `t_person` (`id_person`, `first_name_pers`, `last_name_pers`, `birth
 /*!40000 ALTER TABLE `t_person` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_pers_live_adress
-DROP TABLE IF EXISTS `t_pers_live_adress`;
 CREATE TABLE IF NOT EXISTS `t_pers_live_adress` (
   `id_pers_live_adress` int(11) NOT NULL AUTO_INCREMENT,
   `fk_person` int(11) DEFAULT NULL,
@@ -178,7 +188,6 @@ CREATE TABLE IF NOT EXISTS `t_pers_live_adress` (
 /*!40000 ALTER TABLE `t_pers_live_adress` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_state
-DROP TABLE IF EXISTS `t_state`;
 CREATE TABLE IF NOT EXISTS `t_state` (
   `id_state` int(11) NOT NULL,
   `name_state` varchar(50) NOT NULL,
@@ -190,7 +199,6 @@ CREATE TABLE IF NOT EXISTS `t_state` (
 /*!40000 ALTER TABLE `t_state` ENABLE KEYS */;
 
 -- Export de la structure de la table disc_golf_164. t_telefon
-DROP TABLE IF EXISTS `t_telefon`;
 CREATE TABLE IF NOT EXISTS `t_telefon` (
   `id_tel` int(11) NOT NULL AUTO_INCREMENT,
   `indicatif_tel` varchar(5) NOT NULL,
