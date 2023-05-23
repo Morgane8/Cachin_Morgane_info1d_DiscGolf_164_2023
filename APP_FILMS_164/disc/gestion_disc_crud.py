@@ -1,6 +1,6 @@
 """Gestion des "routes" FLASK et des données pour les genres.
 Fichier : gestion_disc_crud.py
-Auteur : OM 2021.03.16
+Auteur : MC 2023.05.23
 """
 from pathlib import Path
 
@@ -12,9 +12,9 @@ from flask import url_for
 from APP_FILMS_164 import app
 from APP_FILMS_164.database.database_tools import DBconnection
 from APP_FILMS_164.erreurs.exceptions import *
-from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFAjouterGenres
-from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFDeleteGenre
-from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFUpdateGenre
+from APP_FILMS_164.disc.gestion_disc_wtf_forms import FormWTFAjouterDisc
+from APP_FILMS_164.disc.gestion_disc_wtf_forms import FormWTFDeleteDisc
+from APP_FILMS_164.disc.gestion_disc_wtf_forms import FormWTFUpdateDisc
 
 """
     Auteur : OM 2021.03.16
@@ -53,18 +53,18 @@ def disc_afficher(order_by, id_disc_sel):
 
                 data_disc = mc_afficher.fetchall()
 
-                print("data_genres ", data_disc, " Type : ", type(data_disc))
+                print("data_disc ", data_disc, " Type : ", type(data_disc))
 
                 # Différencier les messages si la table est vide.
                 if not data_disc and id_disc_sel == 0:
-                    flash("""La table "t_person" est vide. !!""", "warning")
+                    flash("""La table "t_disc" est vide. !!""", "warning")
                 elif not data_disc and id_disc_sel > 0:
                     # Si l'utilisateur change l'id_genre dans l'URL et que le genre n'existe pas,
-                    flash(f"La personne demandé n'existe pas !!", "warning")
+                    flash(f"Le disc demandé n'existe pas !!", "warning")
                 else:
                     # Dans tous les autres cas, c'est que la table "t_person" est vide.
                     # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
-                    flash(f"Données genres affichés !!", "success")
+                    flash(f"Données disc affichés !!", "success")
 
         except Exception as Exception_genres_afficher:
             raise ExceptionGenresAfficher(f"fichier : {Path(__file__).name}  ;  "
@@ -97,24 +97,22 @@ def disc_afficher(order_by, id_disc_sel):
 
 @app.route("/disc_ajouter", methods=['GET', 'POST'])
 def disc_ajouter_wtf():
-    form = FormWTFAjouterGenres()
+    form = FormWTFAjouterDisc()
     if request.method == "POST":
         try:
             if form.validate_on_submit():
-                name_genre_wtf = form.nom_genre_wtf.data
-                last_name_genre = name_genre_wtf.lower()
-                first_name_pers = form.prenom_pers_wtf.data
-                birth_date_pers = form.birth_date_pers_wtf.data
-                gender_pers = form.gender_pers_wtf.data
-                nationality_pers = form.nationality_pers_wtf.data
-                valeurs_insertion_dictionnaire = {"value_last_name_pers": last_name_genre,
-                                                  "value_first_name_pers": first_name_pers,
-                                                  "value_birth_date_pers": birth_date_pers,
-                                                  "value_gender_pers": gender_pers,
-                                                  "value_nationality_pers": nationality_pers}
+                label_disc_wtf = form.label_disc_wtf.data
+                label_disc = label_disc_wtf.lower()
+                weight_disc = form.weight_disc_wtf.data
+                color_disc = form.color_disc_wtf.data
+                stamp_disc = form.stamp_disc_wtf.data
+                valeurs_insertion_dictionnaire = {"value_label_disc": label_disc,
+                                                  "value_weight_disc": weight_disc,
+                                                  "value_color_disc": color_disc,
+                                                  "value_stamp_disc": stamp_disc}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_person = """INSERT INTO t_disc (id_disc,last_name_pers,first_name_pers, birth_date_pers, gender_pers, nationality_pers) VALUES (NULL,%(value_last_name_pers)s,%(value_first_name_pers)s,%(value_birth_date_pers)s, %(value_gender_pers)s, %(value_nationality_pers)s) """
+                strsql_insert_person = """INSERT INTO t_disc (id_disc,label_disc, weight_disc, color_disc, stamp_disc) VALUES (NULL,%(value_label_disc)s,%(value_weight_disc)s,%(value_color_disc)s, %(value_stamp_disc)s """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_person, valeurs_insertion_dictionnaire)
 
@@ -129,7 +127,7 @@ def disc_ajouter_wtf():
                                             f"{disc_ajouter_wtf.__name__} ; "
                                             f"{Exception_genres_ajouter_wtf}")
 
-    return render_template("genres/disc_ajouter_wtf.html", form=form)
+    return render_template("disc/disc_ajouter_wtf.html", form=form)
 
 
 """
@@ -155,34 +153,32 @@ def disc_ajouter_wtf():
 @app.route("/disc_update", methods=['GET', 'POST'])
 def disc_update_wtf():
     # L'utilisateur vient de cliquer sur le bouton "EDIT". Récupère la valeur de "id_genre"
-    id_person_update = request.values['id_genre_btn_edit_html']
+    id_disc_update = request.values['id_genre_btn_edit_html']
 
     # Objet formulaire pour l'UPDATE
-    form_update = FormWTFUpdateGenre()
+    form_update = FormWTFUpdateDisc()
     try:
         print(" on submit ", form_update.validate_on_submit())
         if form_update.validate_on_submit():
             # Récupèrer la valeur du champ depuis "disc_update_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
-            last_name_pers_update = form_update.nom_genre_update_wtf.data
-            last_name_pers_update = last_name_pers_update.lower()
-            first_name_pers_update = form_update.prenom_pers_update_wtf.data
-            birth_date_pers_update = form_update.birth_date_pers_update_wtf.data
-            gender_pers_update = form_update.gender_pers_update_wtf.data
-            nationality_pers_update = form_update.nationality_pers_update_wtf.data
+            label_disc_update_wtf = form_update.label_disc_update_wtf.data
+            label_disc_update = label_disc_update_wtf.lower()
+            weight_disc_update = form_update.weight_disc_update_wtf.data
+            color_disc_update = form_update.color_disc_update_wtf.data
+            stamp_disc_update = form_update.stamp_disc_update_wtf.data
 
-            valeur_update_dictionnaire = {"value_id_person": id_person_update,
-                                          "value_last_name_pers_update": last_name_pers_update,
-                                          "value_first_name_pers_update": first_name_pers_update,
-                                          "value_birth_date_pers_update": birth_date_pers_update,
-                                          "value_gender_pers_update": gender_pers_update,
-                                          "value_nationality_pers_update": nationality_pers_update
+            valeur_update_dictionnaire = {"value_id_disc": id_disc_update,
+                                          "value_label_disc_update": label_disc_update,
+                                          "value_weight_disc_update": weight_disc_update,
+                                          "value_color_disc_update": color_disc_update,
+                                          "value_stamp_disc_update": stamp_disc_update
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_intitulegenre = """UPDATE t_person SET last_name_pers = %(value_last_name_pers_update)s, 
-            first_name_pers = %(value_first_name_pers_update)s, birth_date_pers = %(value_birth_date_pers_update)s, 
-            gender_pers = %(value_gender_pers_update)s, nationality_pers = %(value_nationality_pers_update)s WHERE id_person = %(value_id_person)s """
+            str_sql_update_intitulegenre = """UPDATE t_disc SET label_disc = %(value_label_disc_update)s, 
+            weight_disc = %(value_weight_disc_update)s, color_disc = %(value_color_disc_update)s, 
+            stamp_disc = %(value_stamp_disc_update)s WHERE id_disc = %(value_id_disc)s """
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
@@ -191,25 +187,24 @@ def disc_update_wtf():
 
             # afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_genre_update"
-            return redirect(url_for('disc_afficher', order_by="ASC", id_disc_sel=id_person_update))
+            return redirect(url_for('disc_afficher', order_by="ASC", id_disc_sel=id_disc_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
             str_sql_id_genre = "SELECT * FROM t_disc " \
-                               "WHERE id_disc = %(value_id_person)s"
-            valeur_select_dictionnaire = {"value_id_person": id_person_update}
+                               "WHERE id_disc = %(value_id_disc)s"
+            valeur_select_dictionnaire = {"value_id_disc": id_disc_update}
             with DBconnection() as mybd_conn:
                 mybd_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
             # Une seule valeur est suffisante "fetchone()", vu qu'il n'y a qu'un seul champ "nom genre" pour l'UPDATE
-            data_nom_genre = mybd_conn.fetchone()
-            print("data_nom_genre ", data_nom_genre, " type ", type(data_nom_genre), " genre ",
-                  data_nom_genre["last_name_pers"])
+            data_disc = mybd_conn.fetchone()
+            print("data_disc ", data_disc, " type ", type(data_disc), " disc ",
+                  data_disc["label_disc"])
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "disc_update_wtf.html"
-            form_update.nom_genre_update_wtf.data = data_nom_genre["last_name_pers"]
-            form_update.prenom_pers_update_wtf.data = data_nom_genre["first_name_pers"]
-            form_update.birth_date_pers_update_wtf.data = data_nom_genre["birth_date_pers"]
-            form_update.gender_pers_update_wtf.data = data_nom_genre["gender_pers"]
-            form_update.nationality_pers_update_wtf.data = data_nom_genre["nationality_pers"]
+            form_update.label_disc_update_wtf.data = data_disc["label_disc"]
+            form_update.weight_disc_update_wtf.data = data_disc["weight_disc"]
+            form_update.color_disc_update_wtf.data = data_disc["color_disc"]
+            form_update.stamp_disc_update_wtf.data = data_disc["stamp_disc"]
 
     except Exception as Exception_genre_update_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
@@ -242,7 +237,7 @@ def disc_delete_wtf():
     id_genre_delete = request.values['id_genre_btn_delete_html']
 
     # Objet formulaire pour effacer le genre sélectionné.
-    form_delete = FormWTFDeleteGenre()
+    form_delete = FormWTFDeleteDisc()
     try:
         print(" on submit ", form_delete.validate_on_submit())
         if request.method == "POST" and form_delete.validate_on_submit():

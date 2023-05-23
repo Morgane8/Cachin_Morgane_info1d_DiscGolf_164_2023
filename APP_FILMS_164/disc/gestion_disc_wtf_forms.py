@@ -10,38 +10,36 @@ from wtforms.validators import Length, InputRequired, DataRequired
 from wtforms.validators import Regexp
 
 
-class FormWTFAjouterGenres(FlaskForm):
+class FormWTFAjouterDisc(FlaskForm):
     """
         Dans le formulaire "disc_ajouter_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     #nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
     nom_genre_regexp = ""
-    nom_genre_wtf = StringField("Clavioter le nom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    label_disc_wtf = StringField("Clavioter le label du disc ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                    Regexp(nom_genre_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, "
                                                                                   "d'espace à double, de double "
                                                                                   "apostrophe, de double trait union")
                                                                    ])
-    prenom_pers_wtf = StringField("Clavioter le prénom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    weight_disc_wtf = StringField("Clavioter le poids ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                  Regexp(nom_genre_regexp,
                                                                         message="Pas de chiffres, de caractères "
                                                                                 "spéciaux, "
                                                                                 "d'espace à double, de double "
                                                                                 "apostrophe, de double trait union")
                                                                  ])
-    birth_date_pers_wtf = DateField("Date de naissance", validators=[InputRequired("Date obligatoire"),
-                                                                                 DataRequired("Date non valide")])
 
-    gender_pers_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    color_disc_wtf = StringField("Clavioter la couleur ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                       Regexp(nom_genre_regexp,
                                                                              message="Pas de chiffres, de caractères "
                                                                                      "spéciaux, "
                                                                                      "d'espace à double, de double "
                                                                                      "apostrophe, de double trait union")
                                                                       ])
-    nationality_pers_wtf = StringField("Clavioter la nationalité ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    stamp_disc_wtf = StringField("Clavioter le stamp ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                       Regexp(nom_genre_regexp,
                                                                              message="Pas de chiffres, de caractères "
                                                                                      "spéciaux, "
@@ -50,55 +48,51 @@ class FormWTFAjouterGenres(FlaskForm):
                                                                       ])
 
 
-    submit = SubmitField("Enregistrer Person")
+    submit = SubmitField("Enregistrer disc")
 
 
 
-class FormWTFUpdateGenre(FlaskForm):
+class FormWTFUpdateDisc(FlaskForm):
     """
         Dans le formulaire "disc_update_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     #nom_genre_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
     nom_genre_update_regexp = ""
-    nom_genre_update_wtf = StringField("Clavioter le nom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
-                                                                          Regexp(nom_genre_update_regexp,
-                                                                                 message="Pas de chiffres, de "
-                                                                                         "caractères "
-                                                                                         "spéciaux, "
-                                                                                         "d'espace à double, de double "
-                                                                                         "apostrophe, de double trait "
-                                                                                         "union")
-                                                                          ])
-    prenom_pers_update_wtf = StringField("Clavioter le prénom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    label_disc_update_wtf = StringField("Clavioter le label du disc ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                   Regexp(nom_genre_update_regexp,
+                                                                          message="Pas de chiffres, de caractères "
+                                                                                  "spéciaux, "
+                                                                                  "d'espace à double, de double "
+                                                                                  "apostrophe, de double trait union")
+                                                                   ])
+    weight_disc_update_wtf = StringField("Clavioter le poids ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                 Regexp(nom_genre_update_regexp,
+                                                                        message="Pas de chiffres, de caractères "
+                                                                                "spéciaux, "
+                                                                                "d'espace à double, de double "
+                                                                                "apostrophe, de double trait union")
+                                                                 ])
+
+    color_disc_update_wtf = StringField("Clavioter la couleur ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                       Regexp(nom_genre_update_regexp,
                                                                              message="Pas de chiffres, de caractères "
                                                                                      "spéciaux, "
                                                                                      "d'espace à double, de double "
                                                                                      "apostrophe, de double trait union")
                                                                       ])
-    birth_date_pers_update_wtf = DateField("Date de naissance", validators=[InputRequired("Date obligatoire"),
-                                                                     DataRequired("Date non valide")])
+    stamp_disc_update_wtf = StringField("Clavioter le stamp ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                      Regexp(nom_genre_update_regexp,
+                                                                             message="Pas de chiffres, de caractères "
+                                                                                     "spéciaux, "
+                                                                                     "d'espace à double, de double "
+                                                                                     "apostrophe, de double trait union")
+                                                                      ])
 
-    gender_pers_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
-                                                                     Regexp(nom_genre_update_regexp,
-                                                                            message="Pas de chiffres, de caractères "
-                                                                                    "spéciaux, "
-                                                                                    "d'espace à double, de double "
-                                                                                    "apostrophe, de double trait union")
-                                                                     ])
-    nationality_pers_update_wtf = StringField("Clavioter la nationalité ",
-                                       validators=[Length(min=2, max=20, message="min 2 max 20"),
-                                                   Regexp(nom_genre_update_regexp,
-                                                          message="Pas de chiffres, de caractères "
-                                                                  "spéciaux, "
-                                                                  "d'espace à double, de double "
-                                                                  "apostrophe, de double trait union")
-                                                   ])
-    submit = SubmitField("Update person")
+    submit = SubmitField("Update disc")
 
 
-class FormWTFDeleteGenre(FlaskForm):
+class FormWTFDeleteDisc(FlaskForm):
     """
         Dans le formulaire "disc_delete_wtf.html"
 
@@ -107,7 +101,7 @@ class FormWTFDeleteGenre(FlaskForm):
         submit_btn_conf_del : Bouton de confirmation pour effacer un "genre".
         submit_btn_annuler : Bouton qui permet d'afficher la table "t_person".
     """
-    nom_genre_delete_wtf = StringField("Effacer ce nom")
+    nom_pers_delete_wtf = StringField("Effacer ce nom")
     submit_btn_del = SubmitField("Effacer nom")
     submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ?")
     submit_btn_annuler = SubmitField("Annuler")

@@ -29,12 +29,7 @@ USE Cachin_Morgane_info1d_DiscGolf_164_2023;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-
--- Export de la structure de la base pour disc_golf_164
-CREATE DATABASE IF NOT EXISTS `disc_golf_164` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `disc_golf_164`;
-
--- Export de la structure de la table disc_golf_164. t_pers_possess_disc
+-- Export de la structure de la table disc_golf_164. t_pers_possess_disc
 CREATE TABLE IF NOT EXISTS `t_pers_possess_disc` (
   `id_pers_possess_disc` int(11) NOT NULL AUTO_INCREMENT,
   `fk_person` int(11) DEFAULT NULL,
@@ -46,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `t_pers_possess_disc` (
   CONSTRAINT `FK_t_pers_possess_disc_t_disc` FOREIGN KEY (`fk_disc`) REFERENCES `t_disc` (`id_disc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Export de données de la table disc_golf_164.t_pers_possess_disc : ~0 rows (environ)
+-- Export de données de la table disc_golf_164.t_pers_possess_disc : ~0 rows (environ)
 /*!40000 ALTER TABLE `t_pers_possess_disc` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_pers_possess_disc` ENABLE KEYS */;
 
@@ -102,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `t_disc` (
 
 -- Export de données de la table disc_golf_164.t_disc : ~0 rows (environ)
 /*!40000 ALTER TABLE `t_disc` DISABLE KEYS */;
-INSERT INTO `t_disc` (`id_disc`, `weight_disc`, `colour_disc`, `stamp_disc`) VALUES
+INSERT INTO `t_disc` (`id_disc`, `weight_disc`, `color_disc`, `stamp_disc`) VALUES
 	(1, '150', 'yellow', 'walkabout');
 /*!40000 ALTER TABLE `t_disc` ENABLE KEYS */;
 

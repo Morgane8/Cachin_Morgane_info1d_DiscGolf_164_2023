@@ -1,48 +1,41 @@
 {% extends "base.html" %}
-{% block title %} Ajouter un Nom (WTF) {% endblock %}
+{% block title %} Ajouter un disc (WTF) {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Ajouter une nouvelle personne (WTForms)
+				Ajouter un nouveau disc (WTForms)
 			</p>
 			<form action="" method="POST" novalidate>
 				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
 				{{ form.hidden_tag() }}
 				<div class="form-group">
 					<p>
-						{{ form.nom_genre_wtf.label }}<br>
-						{{ form.nom_genre_wtf(size=32) }}<br>
-						{% for error in form.nom_genre_wtf.errors %}
+						{{ form.label_disc_wtf.label }}<br>
+						{{ form.label_disc_wtf(size=32) }}<br>
+						{% for error in form.label_disc_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
 					<p>
-						{{ form.prenom_pers_wtf.label }}<br>
-						{{ form.prenom_pers_wtf(size=32) }}<br>
-						{% for error in form.prenom_pers_wtf.errors %}
+						{{ form.weight_disc_wtf.label }}<br>
+						{{ form.weight_disc_wtf(size=32) }}<br>
+						{% for error in form.weight_disc_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
 					<p>
-						{{ form.birth_date_pers_wtf.label }}<br>
-						{{ form.birth_date_pers_wtf(size=32) }}<br>
-						{% for error in form.birth_date_pers_wtf.errors %}
+						{{ form.color_disc_wtf.label }}<br>
+						{{ form.color_disc_wtf(size=32) }}<br>
+						{% for error in form.color_disc_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
 					<p>
-						{{ form.gender_pers_wtf.label }}<br>
-						{{ form.gender_pers_wtf(size=32) }}<br>
-						{% for error in form.gender_pers_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form.nationality_pers_wtf.label }}<br>
-						{{ form.nationality_pers_wtf(size=32) }}<br>
-						{% for error in form.nationality_pers_wtf.errors %}
+						{{ form.stamp_disc_wtf.label }}<br>
+						{{ form.stamp_disc_wtf(size=32) }}<br>
+						{% for error in form.stamp_disc_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>

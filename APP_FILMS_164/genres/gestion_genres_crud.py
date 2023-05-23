@@ -101,7 +101,7 @@ def genres_ajouter_wtf():
     if request.method == "POST":
         try:
             if form.validate_on_submit():
-                name_genre_wtf = form.nom_genre_wtf.data
+                name_genre_wtf = form.nom_pers_wtf.data
                 last_name_genre = name_genre_wtf.lower()
                 first_name_pers = form.prenom_pers_wtf.data
                 birth_date_pers = form.birth_date_pers_wtf.data
@@ -164,7 +164,7 @@ def genre_update_wtf():
         if form_update.validate_on_submit():
             # Récupèrer la valeur du champ depuis "genre_update_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
-            last_name_pers_update = form_update.nom_genre_update_wtf.data
+            last_name_pers_update = form_update.nom_pers_update_wtf.data
             last_name_pers_update = last_name_pers_update.lower()
             first_name_pers_update = form_update.prenom_pers_update_wtf.data
             birth_date_pers_update = form_update.birth_date_pers_update_wtf.data
@@ -205,7 +205,7 @@ def genre_update_wtf():
                   data_nom_genre["intitule_genre"])
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "genre_update_wtf.html"
-            form_update.nom_genre_update_wtf.data = data_nom_genre["last_name_pers"]
+            form_update.nom_pers_update_wtf.data = data_nom_genre["last_name_pers"]
             form_update.prenom_pers_update_wtf.data = data_nom_genre["first_name_pers"]
             form_update.birth_date_pers_update_wtf.data = data_nom_genre["birth_date_pers"]
             form_update.gender_pers_update_wtf.data = data_nom_genre["gender_pers"]
@@ -309,7 +309,7 @@ def genre_delete_wtf():
                       data_nom_genre["intitule_genre"])
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "genre_delete_wtf.html"
-            form_delete.nom_genre_delete_wtf.data = data_nom_genre["intitule_genre"]
+            form_delete.nom_pers_delete_wtf.data = data_nom_genre["intitule_genre"]
 
             # Le bouton pour l'action "DELETE" dans le form. "genre_delete_wtf.html" est caché.
             btn_submit_del = False
