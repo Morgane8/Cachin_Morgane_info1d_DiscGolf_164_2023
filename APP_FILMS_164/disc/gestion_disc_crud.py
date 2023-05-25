@@ -112,7 +112,8 @@ def disc_ajouter_wtf():
                                                   "value_stamp_disc": stamp_disc}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_person = """INSERT INTO t_disc (id_disc,label_disc, weight_disc, color_disc, stamp_disc) VALUES (NULL,%(value_label_disc)s,%(value_weight_disc)s,%(value_color_disc)s, %(value_stamp_disc)s """
+                strsql_insert_person = """INSERT INTO t_disc (id_disc, weight_disc, color_disc, stamp_disc, label_disc)
+                VALUES (NULL, %(value_weight_disc)s, %(value_color_disc)s, %(value_stamp_disc)s, %(value_label_disc)s)"""
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_person, valeurs_insertion_dictionnaire)
 
