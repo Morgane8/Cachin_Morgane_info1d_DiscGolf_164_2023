@@ -35,12 +35,19 @@ def film_add_wtf():
     if request.method == "POST":
         try:
             if form_add_film.validate_on_submit():
-                nom_film_add = form_add_film.nom_film_add_wtf.data
+                label_disc = form_add_film.label_disc_wtf.data
+                weight_disc = form_add_film.weight_disc_wtf.data
+                color_disc = form_add_film.color_disc_wtf.data
+                stamp_disc = form_add_film.stamp_disc_wtf.data
 
-                valeurs_insertion_dictionnaire = {"value_nom_film": nom_film_add}
+                valeurs_insertion_dictionnaire = {"value_label_disc": label_disc,
+                                                  "value_weight_disc": weight_disc,
+                                                  "value_color_disc": color_disc,
+                                                  "value_stamp_disc": stamp_disc}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_film = """INSERT INTO t_film (id_film,nom_film) VALUES (NULL,%(value_nom_film)s) """
+                strsql_insert_film = """INSERT INTO t_disc (id_disc, weight_disc, color_disc, stamp_disc, label_disc)
+                VALUES (NULL, %(value_weight_disc)s, %(value_color_disc)s, %(value_stamp_disc)s, %(value_label_disc)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_film, valeurs_insertion_dictionnaire)
 
@@ -66,7 +73,7 @@ Test : exemple: cliquer sur le menu "Films/Genres" puis cliquer sur le bouton "E
 
 Paramètres : sans
 
-But : Editer(update) un genre qui a été sélectionné dans le formulaire "disc_afficher.html"
+But : Editer(update) un genre qui a été sélectionné dans le formulaire "plastic_afficher.html"
 
 Remarque :  Dans le champ "nom_film_update_wtf" du formulaire "films/films_update_wtf.html",
             le contrôle de la saisie s'effectue ici en Python.
@@ -84,28 +91,26 @@ def film_update_wtf():
     try:
         print(" on submit ", form_update_film.validate_on_submit())
         if form_update_film.validate_on_submit():
-            # Récupèrer la valeur du champ depuis "disc_update_wtf.html" après avoir cliqué sur "SUBMIT".
-            nom_film_update = form_update_film.nom_film_update_wtf.data
-            duree_film_update = form_update_film.duree_film_update_wtf.data
-            description_film_update = form_update_film.description_film_update_wtf.data
-            cover_link_film_update = form_update_film.cover_link_film_update_wtf.data
-            datesortie_film_update = form_update_film.datesortie_film_update_wtf.data
+            # Récupèrer la valeur du champ depuis "plastic_update_wtf.html" après avoir cliqué sur "SUBMIT".
+            label_disc_update = form_update_film.label_disc_update_wtf.data
+            weight_disc_update = form_update_film.weight_disc_update_wtf.data
+            color_disc_update = form_update_film.color_disc_update_wtf.data
+            stamp_disc_update = form_update_film.stamp_disc_update_wtf.data
 
             valeur_update_dictionnaire = {"value_id_film": id_film_update,
-                                          "value_nom_film": nom_film_update,
-                                          "value_duree_film": duree_film_update,
-                                          "value_description_film": description_film_update,
-                                          "value_cover_link_film": cover_link_film_update,
-                                          "value_datesortie_film": datesortie_film_update
+                                          "value_label_disc_update": label_disc_update,
+                                          "value_weight_disc_update": weight_disc_update,
+                                          "value_color_disc_update": color_disc_update,
+                                          "value_stamp_disc_update": stamp_disc_update
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_nom_film = """UPDATE t_film SET nom_film = %(value_nom_film)s,
-                                                            duree_film = %(value_duree_film)s,
-                                                            description_film = %(value_description_film)s,
-                                                            cover_link_film = %(value_cover_link_film)s,
-                                                            date_sortie_film = %(value_datesortie_film)s
-                                                            WHERE id_film = %(value_id_film)s"""
+            str_sql_update_nom_film = """UPDATE t_disc SET label_disc = %(value_label_disc_update)s,
+                                                            weight_disc = %(value_weight_disc_update)s,
+                                                            color_disc = %(value_color_disc_update)s,
+                                                            stamp_disc = %(value_cover_link_film)s,
+                                                            date_sortie_film = %(value_stamp_disc_update)s
+                                                            WHERE id_disc = %(value_id_film)s"""
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_nom_film, valeur_update_dictionnaire)
 
@@ -117,7 +122,7 @@ def film_update_wtf():
             return redirect(url_for('films_genres_afficher', id_film_sel=id_film_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_film" et "intitule_genre" de la "t_genre"
-            str_sql_id_film = "SELECT * FROM t_film WHERE id_film = %(value_id_film)s"
+            str_sql_id_film = "SELECT * FROM t_disc WHERE id_disc = %(value_id_film)s"
             valeur_select_dictionnaire = {"value_id_film": id_film_update}
             with DBconnection() as mybd_conn:
                 mybd_conn.execute(str_sql_id_film, valeur_select_dictionnaire)
@@ -127,13 +132,12 @@ def film_update_wtf():
                   data_film["nom_film"])
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "film_update_wtf.html"
-            form_update_film.nom_film_update_wtf.data = data_film["nom_film"]
-            form_update_film.duree_film_update_wtf.data = data_film["duree_film"]
+            form_update_film.label_disc_update_wtf.data = data_film["label_disc"]
+            form_update_film.weight_disc_update_wtf.data = data_film["weight_disc"]
             # Debug simple pour contrôler la valeur dans la console "run" de PyCharm
             print(f" duree film  ", data_film["duree_film"], "  type ", type(data_film["duree_film"]))
-            form_update_film.description_film_update_wtf.data = data_film["description_film"]
-            form_update_film.cover_link_film_update_wtf.data = data_film["cover_link_film"]
-            form_update_film.datesortie_film_update_wtf.data = data_film["date_sortie_film"]
+            form_update_film.color_disc_update_wtf.data = data_film["color_disc"]
+            form_update_film.stamp_disc_update_wtf.data = data_film["stamp_disc"]
 
     except Exception as Exception_film_update_wtf:
         raise ExceptionFilmUpdateWtf(f"fichier : {Path(__file__).name}  ;  "

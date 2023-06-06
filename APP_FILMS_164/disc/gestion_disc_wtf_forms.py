@@ -1,5 +1,5 @@
 """
-    Fichier : gestion_disc_wtf_forms.py
+    Fichier : gestion_plastic_wtf_forms.py
     Auteur : OM 2021.03.22
     Gestion des formulaires avec WTF
 """
@@ -12,7 +12,7 @@ from wtforms.validators import Regexp
 
 class FormWTFAjouterDisc(FlaskForm):
     """
-        Dans le formulaire "disc_ajouter_wtf.html" on impose que le champ soit rempli.
+        Dans le formulaire "plastic_ajouter_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     #nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
@@ -54,7 +54,7 @@ class FormWTFAjouterDisc(FlaskForm):
 
 class FormWTFUpdateDisc(FlaskForm):
     """
-        Dans le formulaire "disc_update_wtf.html" on impose que le champ soit rempli.
+        Dans le formulaire "plastic_update_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     #nom_genre_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
@@ -94,7 +94,7 @@ class FormWTFUpdateDisc(FlaskForm):
 
 class FormWTFDeleteDisc(FlaskForm):
     """
-        Dans le formulaire "disc_delete_wtf.html"
+        Dans le formulaire "plastic_delete_wtf.html"
 
         nom_genre_delete_wtf : Champ qui reçoit la valeur du genre, lecture seule. (readonly=true)
         submit_btn_del : Bouton d'effacement "DEFINITIF".

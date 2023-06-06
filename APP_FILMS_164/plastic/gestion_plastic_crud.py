@@ -12,9 +12,9 @@ from flask import url_for
 from APP_FILMS_164 import app
 from APP_FILMS_164.database.database_tools import DBconnection
 from APP_FILMS_164.erreurs.exceptions import *
-from APP_FILMS_164.disc.gestion_disc_wtf_forms import FormWTFAjouterDisc
-from APP_FILMS_164.disc.gestion_disc_wtf_forms import FormWTFDeleteDisc
-from APP_FILMS_164.disc.gestion_disc_wtf_forms import FormWTFUpdateDisc
+from APP_FILMS_164.plastic.gestion_plastic_wtf_forms import FormWTFAjouterPlastic
+from APP_FILMS_164.plastic.gestion_plastic_wtf_forms import FormWTFDeletePlastic
+from APP_FILMS_164.plastic.gestion_plastic_wtf_forms import FormWTFUpdatePlastic
 
 """
     Auteur : OM 2021.03.16
@@ -28,13 +28,13 @@ from APP_FILMS_164.disc.gestion_disc_wtf_forms import FormWTFUpdateDisc
 """
 
 
-@app.route("/disc_afficher/<string:order_by>/<int:id_disc_sel>", methods=['GET', 'POST'])
-def disc_afficher(order_by, id_disc_sel):
+@app.route("/plastic_afficher/<string:order_by>/<int:id_disc_sel>", methods=['GET', 'POST'])
+def plastic_afficher(order_by, id_disc_sel):
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
                 if order_by == "ASC" and id_disc_sel == 0:
-                    strsql_disc_afficher = """SELECT * FROM t_disc"""
+                    strsql_disc_afficher = """SELECT * FROM t_plastic_type"""
                     mc_afficher.execute(strsql_disc_afficher)
                 elif order_by == "ASC":
                     # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -43,11 +43,11 @@ def disc_afficher(order_by, id_disc_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_disc_selected_dictionnaire = {"value_id_disc_selected": id_disc_sel}
-                    strsql_person_afficher = """SELECT *  FROM t_disc WHERE id_disc = %(value_id_disc_selected)s"""
+                    strsql_person_afficher = """SELECT *  FROM t_plastic_type WHERE id_plastic_type = %(value_id_disc_selected)s"""
 
                     mc_afficher.execute(strsql_person_afficher, valeur_id_disc_selected_dictionnaire)
                 else:
-                    strsql_disc_afficher = """SELECT * FROM t_disc"""
+                    strsql_disc_afficher = """SELECT * FROM t_plastic_type"""
 
                     mc_afficher.execute(strsql_disc_afficher)
 
@@ -57,22 +57,22 @@ def disc_afficher(order_by, id_disc_sel):
 
                 # Différencier les messages si la table est vide.
                 if not data_disc and id_disc_sel == 0:
-                    flash("""La table "t_disc" est vide. !!""", "warning")
+                    flash("""La table "t_plastic_type" est vide. !!""", "warning")
                 elif not data_disc and id_disc_sel > 0:
                     # Si l'utilisateur change l'id_genre dans l'URL et que le genre n'existe pas,
-                    flash(f"Le disc demandé n'existe pas !!", "warning")
+                    flash(f"Le plastique demandé n'existe pas !!", "warning")
                 else:
                     # Dans tous les autres cas, c'est que la table "t_person" est vide.
                     # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
-                    flash(f"Données disc affichés !!", "success")
+                    flash(f"Données plastique affichés !!", "success")
 
         except Exception as Exception_genres_afficher:
             raise ExceptionGenresAfficher(f"fichier : {Path(__file__).name}  ;  "
-                                          f"{disc_afficher.__name__} ; "
+                                          f"{plastic_afficher.__name__} ; "
                                           f"{Exception_genres_afficher}")
 
     # Envoie la page "HTML" au serveur.
-    return render_template("disc/plastic_afficher.html", data=data_disc)
+    return render_template("plastic/plastic_afficher.html", data=data_disc)
 
 
 """
@@ -96,24 +96,17 @@ def disc_afficher(order_by, id_disc_sel):
 
 
 @app.route("/disc_ajouter", methods=['GET', 'POST'])
-def disc_ajouter_wtf():
-    form = FormWTFAjouterDisc()
+def plastic_ajouter_wtf():
+    form = FormWTFAjouterPlastic()
     if request.method == "POST":
         try:
             if form.validate_on_submit():
-                label_disc_wtf = form.label_disc_wtf.data
-                label_disc = label_disc_wtf.lower()
-                weight_disc = form.weight_disc_wtf.data
-                color_disc = form.color_disc_wtf.data
-                stamp_disc = form.stamp_disc_wtf.data
-                valeurs_insertion_dictionnaire = {"value_label_disc": label_disc,
-                                                  "value_weight_disc": weight_disc,
-                                                  "value_color_disc": color_disc,
-                                                  "value_stamp_disc": stamp_disc}
+                name_plastic_type_wtf = form.name_plastic_type_wtf.data
+                name_plastic_type = name_plastic_type_wtf.lower()
+                valeurs_insertion_dictionnaire = {"value_name_plastic_type": name_plastic_type}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_person = """INSERT INTO t_disc (id_disc, weight_disc, color_disc, stamp_disc, label_disc)
-                VALUES (NULL, %(value_weight_disc)s, %(value_color_disc)s, %(value_stamp_disc)s, %(value_label_disc)s)"""
+                strsql_insert_person = """INSERT INTO t_plastic_type (id_plastic_type, name_plastic_type) VALUES (NULL, %(value_name_plastic_type)s)"""
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_person, valeurs_insertion_dictionnaire)
 
@@ -121,14 +114,14 @@ def disc_ajouter_wtf():
                 print(f"Données insérées !!")
 
                 # Pour afficher et constater l'insertion de la valeur, on affiche en ordre inverse. (DESC)
-                return redirect(url_for('disc_afficher', order_by='DESC', id_disc_sel=0))
+                return redirect(url_for('plastic_afficher', order_by='DESC', id_disc_sel=0))
 
         except Exception as Exception_genres_ajouter_wtf:
             raise ExceptionGenresAjouterWtf(f"fichier : {Path(__file__).name}  ;  "
-                                            f"{disc_ajouter_wtf.__name__} ; "
+                                            f"{plastic_ajouter_wtf.__name__} ; "
                                             f"{Exception_genres_ajouter_wtf}")
 
-    return render_template("disc/plastic_ajouter_wtf.html", form=form)
+    return render_template("plastic/plastic_ajouter_wtf.html", form=form)
 
 
 """
@@ -152,34 +145,25 @@ def disc_ajouter_wtf():
 
 
 @app.route("/disc_update", methods=['GET', 'POST'])
-def disc_update_wtf():
+def plastic_update_wtf():
     # L'utilisateur vient de cliquer sur le bouton "EDIT". Récupère la valeur de "id_genre"
     id_disc_update = request.values['id_genre_btn_edit_html']
 
     # Objet formulaire pour l'UPDATE
-    form_update = FormWTFUpdateDisc()
+    form_update = FormWTFUpdatePlastic()
     try:
         print(" on submit ", form_update.validate_on_submit())
         if form_update.validate_on_submit():
             # Récupèrer la valeur du champ depuis "plastic_update_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
-            label_disc_update_wtf = form_update.label_disc_update_wtf.data
-            label_disc_update = label_disc_update_wtf.lower()
-            weight_disc_update = form_update.weight_disc_update_wtf.data
-            color_disc_update = form_update.color_disc_update_wtf.data
-            stamp_disc_update = form_update.stamp_disc_update_wtf.data
+            name_plastic_type_update_wtf = form_update.name_plastic_type_update_wtf.data
+            name_plastic_type_update = name_plastic_type_update_wtf.lower()
 
             valeur_update_dictionnaire = {"value_id_disc": id_disc_update,
-                                          "value_label_disc_update": label_disc_update,
-                                          "value_weight_disc_update": weight_disc_update,
-                                          "value_color_disc_update": color_disc_update,
-                                          "value_stamp_disc_update": stamp_disc_update
-                                          }
+                                          "value_name_plastic_type_update": name_plastic_type_update}
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_intitulegenre = """UPDATE t_disc SET label_disc = %(value_label_disc_update)s, 
-            weight_disc = %(value_weight_disc_update)s, color_disc = %(value_color_disc_update)s, 
-            stamp_disc = %(value_stamp_disc_update)s WHERE id_disc = %(value_id_disc)s """
+            str_sql_update_intitulegenre = """UPDATE t_plastic_type SET name_plastic_type = %(value_name_plastic_type_update)s WHERE id_plastic_type = %(value_id_disc)s """
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
@@ -191,8 +175,8 @@ def disc_update_wtf():
             return redirect(url_for('disc_afficher', order_by="ASC", id_disc_sel=id_disc_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT * FROM t_disc " \
-                               "WHERE id_disc = %(value_id_disc)s"
+            str_sql_id_genre = "SELECT * FROM t_plastic_type " \
+                               "WHERE id_plastic_type = %(value_id_disc)s"
             valeur_select_dictionnaire = {"value_id_disc": id_disc_update}
             with DBconnection() as mybd_conn:
                 mybd_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
@@ -202,14 +186,11 @@ def disc_update_wtf():
                   data_disc["label_disc"])
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "plastic_update_wtf.html"
-            form_update.label_disc_update_wtf.data = data_disc["label_disc"]
-            form_update.weight_disc_update_wtf.data = data_disc["weight_disc"]
-            form_update.color_disc_update_wtf.data = data_disc["color_disc"]
-            form_update.stamp_disc_update_wtf.data = data_disc["stamp_disc"]
+            form_update.name_plastic_type_update_wtf.data = data_disc["name_plastic_type"]
 
     except Exception as Exception_genre_update_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
-                                      f"{disc_update_wtf.__name__} ; "
+                                      f"{plastic_update_wtf.__name__} ; "
                                       f"{Exception_genre_update_wtf}")
 
     return render_template("disc/plastic_update_wtf.html", form_update=form_update)
@@ -231,14 +212,14 @@ def disc_update_wtf():
 
 
 @app.route("/disc_delete", methods=['GET', 'POST'])
-def disc_delete_wtf():
+def plastic_delete_wtf():
     data_films_attribue_genre_delete = None
     btn_submit_del = None
     # L'utilisateur vient de cliquer sur le bouton "DELETE". Récupère la valeur de "id_genre"
     id_genre_delete = request.values['id_genre_btn_delete_html']
 
     # Objet formulaire pour effacer le genre sélectionné.
-    form_delete = FormWTFDeleteDisc()
+    form_delete = FormWTFDeletePlastic()
     try:
         print(" on submit ", form_delete.validate_on_submit())
         if request.method == "POST" and form_delete.validate_on_submit():
@@ -261,8 +242,8 @@ def disc_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_disc": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-                str_sql_delete_films_genre = """DELETE FROM t_pers_possess_disc WHERE fk_person = %(value_id_disc)s"""
-                str_sql_delete_idgenre = """DELETE FROM t_person WHERE id_person = %(value_id_disc)s"""
+                str_sql_delete_films_genre = """DELETE FROM t_disc_have_plastic WHERE fk_disc = %(value_id_disc)s"""
+                str_sql_delete_idgenre = """DELETE FROM t_plastic_type WHERE id_plastic_type = %(value_id_disc)s"""
                 # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
                 # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
                 with DBconnection() as mconn_bd:
@@ -280,10 +261,10 @@ def disc_delete_wtf():
             print(id_genre_delete, type(id_genre_delete))
 
             # Requête qui affiche tous les films_genres qui ont le genre que l'utilisateur veut effacer
-            str_sql_genres_films_delete = """SELECT id_pers_possess_disc, label_disc, id_person, last_name_pers FROM t_pers_possess_disc
-                                            INNER JOIN t_disc ON t_pers_possess_disc.fk_disc = t_disc.id_disc
-                                            INNER JOIN t_person ON t_pers_possess_disc.fk_person = t_person.id_person
-                                            WHERE fk_person = %(value_id_disc)s"""
+            str_sql_genres_films_delete = """SELECT id_disc_have_plastic, label_disc, name_plastic_type FROM t_disc_have_plastic
+                                            INNER JOIN t_disc ON t_disc_have_plastic.fk_disc = t_disc.id_disc
+                                            INNER JOIN t_plastic_type ON t_disc_have_plastic.fk_plastic = t_plastic_type.id_plastic_type
+                                            WHERE fk_disc = %(value_id_disc)s"""
 
             with DBconnection() as mydb_conn:
                 mydb_conn.execute(str_sql_genres_films_delete, valeur_select_dictionnaire)
@@ -295,27 +276,27 @@ def disc_delete_wtf():
                 session['data_films_attribue_genre_delete'] = data_films_attribue_genre_delete
 
                 # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-                str_sql_id_genre = "SELECT * FROM t_disc WHERE id_disc = %(value_id_disc)s"
+                str_sql_id_genre = "SELECT * FROM t_plastic_type WHERE id_plastic_type = %(value_id_disc)s"
 
                 mydb_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
                 # Une seule valeur est suffisante "fetchone()",
                 # vu qu'il n'y a qu'un seul champ "nom genre" pour l'action DELETE
                 data_nom_genre = mydb_conn.fetchone()
                 print("data_nom_genre ", data_nom_genre, " type ", type(data_nom_genre), " genre ",
-                      data_nom_genre["weight_disc"])
+                      data_nom_genre["name_plastic_type"])
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "plastic_delete_wtf.html"
-            form_delete.nom_disc_delete_wtf.data = data_nom_genre["weight_disc"]
+            form_delete.nom_disc_delete_wtf.data = data_nom_genre["name_plastic_type"]
 
             # Le bouton pour l'action "DELETE" dans le form. "plastic_delete_wtf.html" est caché.
             btn_submit_del = False
 
     except Exception as Exception_genre_delete_wtf:
         raise ExceptionGenreDeleteWtf(f"fichier : {Path(__file__).name}  ;  "
-                                      f"{disc_delete_wtf.__name__} ; "
+                                      f"{plastic_delete_wtf.__name__} ; "
                                       f"{Exception_genre_delete_wtf}")
 
-    return render_template("disc/plastic_delete_wtf.html",
+    return render_template("plastic/plastic_delete_wtf.html",
                            form_delete=form_delete,
                            btn_submit_del=btn_submit_del,
                            data_films_associes=data_films_attribue_genre_delete)

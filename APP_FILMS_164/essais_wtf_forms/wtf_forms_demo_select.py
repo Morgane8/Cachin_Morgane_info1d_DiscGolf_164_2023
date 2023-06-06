@@ -1,5 +1,5 @@
 """
-    Fichier : gestion_disc_wtf_forms.py
+    Fichier : gestion_plastic_wtf_forms.py
     Auteur : OM 2021.03.22
     Gestion des formulaires avec WTF
 
