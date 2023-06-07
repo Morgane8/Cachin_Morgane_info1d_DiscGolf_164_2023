@@ -1,41 +1,20 @@
 {% extends "base.html" %}
-{% block title %} Ajouter un disc (WTF) {% endblock %}
+{% block title %} Ajouter un plastique (WTF) {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Ajouter un nouveau disc (WTForms)
+				Ajouter un plastique (WTForms)
 			</p>
 			<form action="" method="POST" novalidate>
 				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
 				{{ form.hidden_tag() }}
 				<div class="form-group">
 					<p>
-						{{ form.label_disc_wtf.label }}<br>
-						{{ form.label_disc_wtf(size=32) }}<br>
-						{% for error in form.label_disc_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form.weight_disc_wtf.label }}<br>
-						{{ form.weight_disc_wtf(size=32) }}<br>
-						{% for error in form.weight_disc_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form.color_disc_wtf.label }}<br>
-						{{ form.color_disc_wtf(size=32) }}<br>
-						{% for error in form.color_disc_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form.stamp_disc_wtf.label }}<br>
-						{{ form.stamp_disc_wtf(size=32) }}<br>
-						{% for error in form.stamp_disc_wtf.errors %}
+						{{ form.name_plastic_type_wtf.label }}<br>
+						{{ form.name_plastic_type_wtf(size=32) }}<br>
+						{% for error in form.name_plastic_type_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>

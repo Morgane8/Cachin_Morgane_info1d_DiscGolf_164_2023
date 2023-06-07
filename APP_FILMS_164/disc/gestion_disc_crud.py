@@ -72,7 +72,7 @@ def disc_afficher(order_by, id_disc_sel):
                                           f"{Exception_genres_afficher}")
 
     # Envoie la page "HTML" au serveur.
-    return render_template("disc/plastic_afficher.html", data=data_disc)
+    return render_template("disc/disc_afficher.html", data=data_disc)
 
 
 """
@@ -128,7 +128,7 @@ def disc_ajouter_wtf():
                                             f"{disc_ajouter_wtf.__name__} ; "
                                             f"{Exception_genres_ajouter_wtf}")
 
-    return render_template("disc/plastic_ajouter_wtf.html", form=form)
+    return render_template("disc/disc_ajouter_wtf.html", form=form)
 
 
 """
@@ -212,7 +212,7 @@ def disc_update_wtf():
                                       f"{disc_update_wtf.__name__} ; "
                                       f"{Exception_genre_update_wtf}")
 
-    return render_template("disc/plastic_update_wtf.html", form_update=form_update)
+    return render_template("disc/disc_update_wtf.html", form_update=form_update)
 
 
 """
@@ -315,7 +315,7 @@ def disc_delete_wtf():
                                       f"{disc_delete_wtf.__name__} ; "
                                       f"{Exception_genre_delete_wtf}")
 
-    return render_template("disc/plastic_delete_wtf.html",
+    return render_template("disc/disc_delete_wtf.html",
                            form_delete=form_delete,
                            btn_submit_del=btn_submit_del,
                            data_films_associes=data_films_attribue_genre_delete)

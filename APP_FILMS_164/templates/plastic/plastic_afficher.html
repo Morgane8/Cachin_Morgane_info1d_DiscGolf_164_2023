@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %} Afficher personnes {% endblock %}
+{% block title %} Afficher plastiques {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				person
+				plastique
 			</p>
             <table class="table table-bordered table-sm">
             {% if data %}
@@ -15,16 +15,7 @@
                             Id
                         </th>
                         <th class="align-middle">
-                            Label
-                        </th>
-                        <th class="align-middle">
-							Weight
-                        </th>
-                        <th class="align-middle">
-							Color
-                        </th>
-                        <th class="align-middle">
-							Stamp
+                            plastic type
                         </th>
                     </tr>
                 </thead>
@@ -34,30 +25,19 @@
 				<tbody>
 					<tr>
 						<td class="align-middle">
-							{{ row.id_disc }}
+							{{ row.id_plastic_type}}
 						</td>
 						<td class="align-middle">
-							{{ row.label_disc }}
-						</td>
-						<td class="align-middle">
-							{{ row.weight_disc }}
-						</td>
-						</td>
-						<td class="align-middle">
-							{{ row.color_disc }}
-						</td>
-						</td>
-						<td class="align-middle">
-							{{ row.stamp_disc }}
+							{{ row.name_plastic_type }}
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-primary" href="{{ url_for('disc_ajouter_wtf') }}" role="button">Ajouter</a>
+							<a class="btn btn-primary" href="{{ url_for('plastic_ajouter_wtf') }}" role="button">Ajouter</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-warning" href="{{ url_for('disc_update_wtf', id_genre_btn_edit_html=row.id_disc) }}" role="button">Edit</a>
+							<a class="btn btn-warning" href="{{ url_for('plastic_update_wtf', id_genre_btn_edit_html=row.id_plastic_type) }}" role="button">Edit</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-danger" href="{{ url_for('disc_delete_wtf', id_genre_btn_delete_html=row.id_disc) }}" role="button">Delete</a>
+							<a class="btn btn-danger" href="{{ url_for('plastic_delete_wtf', id_genre_btn_delete_html=row.id_plastic_type) }}" role="button">Delete</a>
 						</td>
 					</tr>
 				</tbody>
@@ -65,7 +45,7 @@
 				<tbody>
 					<tr>
 						<td>
-							Aucun disc.
+							plastique inconnu.
 						</td>
 						<td>
 							<a class="btn btn-primary" href="{{ url_for('disc_ajouter_wtf') }}" role="button">Ajouter</a>

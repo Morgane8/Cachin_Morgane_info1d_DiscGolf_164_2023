@@ -37,7 +37,7 @@ class FormWTFUpdatePlastic(FlaskForm):
     """
     #nom_genre_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
     nom_genre_update_regexp = ""
-    name_plastic_type_update_wtf = StringField("Clavioter le label du disc ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    name_plastic_type_update_wtf = StringField("Clavioter le type de plastique ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                    Regexp(nom_genre_update_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, "
@@ -45,7 +45,7 @@ class FormWTFUpdatePlastic(FlaskForm):
                                                                                   "apostrophe, de double trait union")
                                                                    ])
 
-    submit = SubmitField("Update disc")
+    submit = SubmitField("Update plastic")
 
 
 class FormWTFDeletePlastic(FlaskForm):
@@ -57,7 +57,7 @@ class FormWTFDeletePlastic(FlaskForm):
         submit_btn_conf_del : Bouton de confirmation pour effacer un "genre".
         submit_btn_annuler : Bouton qui permet d'afficher la table "t_person".
     """
-    nom_disc_delete_wtf = StringField("Effacer ce nom")
-    submit_btn_del = SubmitField("Effacer nom")
+    nom_disc_delete_wtf = StringField("Effacer ce plastique")
+    submit_btn_del = SubmitField("Effacer plastique")
     submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ?")
     submit_btn_annuler = SubmitField("Annuler")

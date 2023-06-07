@@ -28,12 +28,12 @@ from APP_FILMS_164.plastic.gestion_plastic_wtf_forms import FormWTFUpdatePlastic
 """
 
 
-@app.route("/plastic_afficher/<string:order_by>/<int:id_disc_sel>", methods=['GET', 'POST'])
-def plastic_afficher(order_by, id_disc_sel):
+@app.route("/plastic_afficher/<string:order_by>/<int:id_plastic_sel>", methods=['GET', 'POST'])
+def plastic_afficher(order_by, id_plastic_sel):
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                if order_by == "ASC" and id_disc_sel == 0:
+                if order_by == "ASC" and id_plastic_sel == 0:
                     strsql_disc_afficher = """SELECT * FROM t_plastic_type"""
                     mc_afficher.execute(strsql_disc_afficher)
                 elif order_by == "ASC":
@@ -42,7 +42,7 @@ def plastic_afficher(order_by, id_disc_sel):
                     # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
-                    valeur_id_disc_selected_dictionnaire = {"value_id_disc_selected": id_disc_sel}
+                    valeur_id_disc_selected_dictionnaire = {"value_id_disc_selected": id_plastic_sel}
                     strsql_person_afficher = """SELECT *  FROM t_plastic_type WHERE id_plastic_type = %(value_id_disc_selected)s"""
 
                     mc_afficher.execute(strsql_person_afficher, valeur_id_disc_selected_dictionnaire)
@@ -51,14 +51,14 @@ def plastic_afficher(order_by, id_disc_sel):
 
                     mc_afficher.execute(strsql_disc_afficher)
 
-                data_disc = mc_afficher.fetchall()
+                data_plastic = mc_afficher.fetchall()
 
-                print("data_disc ", data_disc, " Type : ", type(data_disc))
+                print("data_disc ", data_plastic, " Type : ", type(data_plastic))
 
                 # Différencier les messages si la table est vide.
-                if not data_disc and id_disc_sel == 0:
+                if not data_plastic and id_plastic_sel == 0:
                     flash("""La table "t_plastic_type" est vide. !!""", "warning")
-                elif not data_disc and id_disc_sel > 0:
+                elif not data_plastic and id_plastic_sel > 0:
                     # Si l'utilisateur change l'id_genre dans l'URL et que le genre n'existe pas,
                     flash(f"Le plastique demandé n'existe pas !!", "warning")
                 else:
@@ -72,7 +72,7 @@ def plastic_afficher(order_by, id_disc_sel):
                                           f"{Exception_genres_afficher}")
 
     # Envoie la page "HTML" au serveur.
-    return render_template("plastic/plastic_afficher.html", data=data_disc)
+    return render_template("plastic/plastic_afficher.html", data=data_plastic)
 
 
 """
@@ -95,7 +95,7 @@ def plastic_afficher(order_by, id_disc_sel):
 """
 
 
-@app.route("/disc_ajouter", methods=['GET', 'POST'])
+@app.route("/plastic_ajouter", methods=['GET', 'POST'])
 def plastic_ajouter_wtf():
     form = FormWTFAjouterPlastic()
     if request.method == "POST":
@@ -114,7 +114,7 @@ def plastic_ajouter_wtf():
                 print(f"Données insérées !!")
 
                 # Pour afficher et constater l'insertion de la valeur, on affiche en ordre inverse. (DESC)
-                return redirect(url_for('plastic_afficher', order_by='DESC', id_disc_sel=0))
+                return redirect(url_for('plastic_afficher', order_by='DESC', id_plastic_sel=0))
 
         except Exception as Exception_genres_ajouter_wtf:
             raise ExceptionGenresAjouterWtf(f"fichier : {Path(__file__).name}  ;  "
@@ -144,7 +144,7 @@ def plastic_ajouter_wtf():
 """
 
 
-@app.route("/disc_update", methods=['GET', 'POST'])
+@app.route("/plastic_update", methods=['GET', 'POST'])
 def plastic_update_wtf():
     # L'utilisateur vient de cliquer sur le bouton "EDIT". Récupère la valeur de "id_genre"
     id_disc_update = request.values['id_genre_btn_edit_html']
@@ -172,7 +172,7 @@ def plastic_update_wtf():
 
             # afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_genre_update"
-            return redirect(url_for('disc_afficher', order_by="ASC", id_disc_sel=id_disc_update))
+            return redirect(url_for('plastic_afficher', order_by="ASC", id_plastic_sel=id_disc_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
             str_sql_id_genre = "SELECT * FROM t_plastic_type " \
@@ -183,7 +183,7 @@ def plastic_update_wtf():
             # Une seule valeur est suffisante "fetchone()", vu qu'il n'y a qu'un seul champ "nom genre" pour l'UPDATE
             data_disc = mybd_conn.fetchone()
             print("data_disc ", data_disc, " type ", type(data_disc), " disc ",
-                  data_disc["label_disc"])
+                  data_disc["name_plastic_type"])
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "plastic_update_wtf.html"
             form_update.name_plastic_type_update_wtf.data = data_disc["name_plastic_type"]
@@ -193,7 +193,7 @@ def plastic_update_wtf():
                                       f"{plastic_update_wtf.__name__} ; "
                                       f"{Exception_genre_update_wtf}")
 
-    return render_template("disc/plastic_update_wtf.html", form_update=form_update)
+    return render_template("plastic/plastic_update_wtf.html", form_update=form_update)
 
 
 """
@@ -211,7 +211,7 @@ def plastic_update_wtf():
 """
 
 
-@app.route("/disc_delete", methods=['GET', 'POST'])
+@app.route("/plastic_delete", methods=['GET', 'POST'])
 def plastic_delete_wtf():
     data_films_attribue_genre_delete = None
     btn_submit_del = None
@@ -225,7 +225,7 @@ def plastic_delete_wtf():
         if request.method == "POST" and form_delete.validate_on_submit():
 
             if form_delete.submit_btn_annuler.data:
-                return redirect(url_for("disc_afficher", order_by="ASC", id_disc_sel=0))
+                return redirect(url_for("plastic_afficher", order_by="ASC", id_plastic_sel=0))
 
             if form_delete.submit_btn_conf_del.data:
                 # Récupère les données afin d'afficher à nouveau
@@ -254,7 +254,7 @@ def plastic_delete_wtf():
                 print(f"Genre définitivement effacé !!")
 
                 # afficher les données
-                return redirect(url_for('disc_afficher', order_by="ASC", id_disc_sel=0))
+                return redirect(url_for('plastic_afficher', order_by="ASC", id_disc_sel=0))
 
         if request.method == "GET":
             valeur_select_dictionnaire = {"value_id_disc": id_genre_delete}
