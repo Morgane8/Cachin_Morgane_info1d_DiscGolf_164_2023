@@ -11,19 +11,19 @@
 						  Id
 						</th>
 						<th class="" >
-						  Nom
+						  label
 						</th>
 						<th class="" >
-						  Durée
+						  weight
 						</th>
 						<th class="" >
-						  Date de sortie
+						  color
 						</th>
 						<th class="" >
-						  Description
+						  stamp
 						</th>
 						<th class="" >
-						  Affiche
+						  image
 						</th>
 					</tr>
 				</thead>
@@ -32,22 +32,22 @@
 			<tbody>
 				<tr>
 					  <th class="align-middle">
-						  {{ row.id_film }}
+						  {{ row.id_disc }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.nom_film }}
+						{{ row.label_disc }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.duree_film|default("", True) }}
+						{{ row.weight_disc|default("", True) }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.date_sortie_film|default("", True) }}
+						{{ row.color_disc|default("", True) }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.description_film|default("", True) }}
+						{{ row.stamp_disc|default("", True) }}
 					  </th>
 					  <th class="align-middle">
-						<img class="img" src={{ row.cover_link_film|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "image masquée FFP8 (in COVID-19 Memory) (absente) mod 164">
+						<img class="img" src={{ row.image_disc|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "disc-golf">
 					  </th>
 					  <th class="align-middle">
 						<a class="btn btn-primary" href="{{ url_for('avertissement_sympa_pour_geeks') }}" role="button">Ajouter</a>
