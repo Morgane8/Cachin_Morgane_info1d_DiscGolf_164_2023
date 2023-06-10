@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				person
+				disc
 			</p>
             <table class="table table-bordered table-sm">
             {% if data %}
@@ -26,6 +26,12 @@
                         <th class="align-middle">
 							Stamp
                         </th>
+						<th class="align-middle">
+							Type
+                        </th>
+						<th class="" >
+						  Image
+						</th>
                     </tr>
                 </thead>
             {% endif %}
@@ -50,6 +56,12 @@
 						<td class="align-middle">
 							{{ row.stamp_disc }}
 						</td>
+						<td class="align-middle">
+							{{ row.type_disc }}
+						</td>
+						<th class="align-middle">
+						<img class="img" src={{ row.image_disc|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "disc-golf">
+					  </th>
 						<td class="text-center" class="align-middle">
 							<a class="btn btn-primary" href="{{ url_for('disc_ajouter_wtf') }}" role="button">Ajouter</a>
 						</td>

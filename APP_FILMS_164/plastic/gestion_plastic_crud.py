@@ -233,7 +233,7 @@ def plastic_delete_wtf():
                 data_films_attribue_genre_delete = session['data_films_attribue_genre_delete']
                 print("data_films_attribue_genre_delete ", data_films_attribue_genre_delete)
 
-                flash(f"Effacer le genre de façon définitive de la BD !!!", "danger")
+                flash(f"Effacer le plastique de façon définitive de la BD !!!", "danger")
                 # L'utilisateur vient de cliquer sur le bouton de confirmation pour effacer...
                 # On affiche le bouton "Effacer genre" qui va irrémédiablement EFFACER le genre
                 btn_submit_del = True
@@ -250,11 +250,11 @@ def plastic_delete_wtf():
                     mconn_bd.execute(str_sql_delete_films_genre, valeur_delete_dictionnaire)
                     mconn_bd.execute(str_sql_delete_idgenre, valeur_delete_dictionnaire)
 
-                flash(f"Genre définitivement effacé !!", "success")
-                print(f"Genre définitivement effacé !!")
+                flash(f"plastique définitivement effacé !!", "success")
+                print(f"plastique définitivement effacé !!")
 
                 # afficher les données
-                return redirect(url_for('plastic_afficher', order_by="ASC", id_disc_sel=0))
+                return redirect(url_for('plastic_afficher', order_by="ASC", id_plastic_sel=0))
 
         if request.method == "GET":
             valeur_select_dictionnaire = {"value_id_disc": id_genre_delete}

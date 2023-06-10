@@ -32,7 +32,7 @@ def films_genres_afficher(id_film_sel):
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                strsql_genres_films_afficher_data = """SELECT id_disc, label_disc, weight_disc, color_disc, stamp_disc,
+                strsql_genres_films_afficher_data = """SELECT id_disc, label_disc, weight_disc, color_disc, stamp_disc, image_disc,
                                                             GROUP_CONCAT(name_plastic_type) as GenresFilms FROM t_disc_have_plastic
                                                             RIGHT JOIN t_disc ON t_disc.id_disc = t_disc_have_plastic.fk_disc
                                                             LEFT JOIN t_plastic_type ON t_plastic_type.id_plastic_type = t_disc_have_plastic.fk_plastic
@@ -61,7 +61,7 @@ def films_genres_afficher(id_film_sel):
                     # Si l'utilisateur change l'id_film dans l'URL et qu'il ne correspond à aucun film
                     flash(f"Le film {id_film_sel} demandé n'existe pas !!", "warning")
                 else:
-                    flash(f"Données films et genres affichés !!", "success")
+                    flash(f"Données discs et plastiques affichés !!", "success")
 
         except Exception as Exception_films_genres_afficher:
             raise ExceptionFilmsGenresAfficher(f"fichier : {Path(__file__).name}  ;  {films_genres_afficher.__name__} ;"
@@ -276,7 +276,7 @@ def genres_films_afficher_data(valeur_id_film_selected_dict):
     print("valeur_id_film_selected_dict...", valeur_id_film_selected_dict)
     try:
 
-        strsql_film_selected = """SELECT id_disc, label_disc, weight_disc, color_disc, stamp_disc, GROUP_CONCAT(id_plastic_type) as GenresFilms FROM t_disc_have_plastic
+        strsql_film_selected = """SELECT id_disc, label_disc, weight_disc, color_disc, stamp_disc, image_disc, GROUP_CONCAT(id_plastic_type) as GenresFilms FROM t_disc_have_plastic
                                         INNER JOIN t_disc ON t_disc.id_disc = t_disc_have_plastic.fk_disc
                                         INNER JOIN t_plastic_type ON t_plastic_type.id_plastic_type = t_disc_have_plastic.fk_plastic
                                         WHERE id_disc = %(value_id_film_selected)s"""

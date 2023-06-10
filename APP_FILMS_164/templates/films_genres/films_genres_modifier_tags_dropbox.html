@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Afficher FILMS GENRES {% endblock %}
+{% block title %} Afficher disc plastic {% endblock %}
 {% block head %}
     <!--
         OM 2020.05.04
@@ -30,36 +30,33 @@
 
 <div class="container">
 		<div class="col-md-12">
-			<p>
-				Tagselect, c'est une DROPBOX qui surgit quand on sélectionne l'espace "TAGS". Pour votre information, le composant TAGSELECT est à disposition sur ce site :
-                 <a href="https://www.jqueryscript.net/form/tags-selector-tagselect.html"
-                    target="_blank">https://www.jqueryscript.net/form/tags-selector-tagselect.html</a>
-
-			</p>
             <p>
-                Films.
+                Disc
             </p>
             <table class="table table-responsive-sm">
                 {% if data_film_selected %}
                     <thead>
                         <tr>
                             <th class="">
-                                id
+                                Id
                             </th>
                             <th class="">
-                                Titre
+                                Label
                             </th>
                             <th class="">
-                                Durée
+                                Weight
                             </th>
                             <th class="">
-                                Date sortie
+                                Color
                             </th>
                             <th class="">
-                                Description
+                                Stamp
                             </th>
                             <th class="">
-                                Affiche
+                                Type
+                            </th>
+                            <th class="">
+                                Image
                             </th>
                         </tr>
                     </thead>
@@ -83,6 +80,9 @@
 						<td class="align-middle">
 							{{ row.stamp_disc|default("", True) }}
 						</td>
+                        <td class="align-middle">
+							{{ row.type_disc|default("", True) }}
+						</td>
 						<td class="align-middle">
                             <img class="img" src={{ row.image_disc|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;" alt = "disc-golf">
 						</td>
@@ -92,7 +92,7 @@
 				<tbody>
 					<tr>
 						<td>
-							Aucun film.
+							Aucun disc.
 						</td>
 						<td>
 							<a class="btn btn-primary" href="{{ url_for('avertissement_sympa_pour_geeks') }}" role="button">Add</a>

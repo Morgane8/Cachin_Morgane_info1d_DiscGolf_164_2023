@@ -8,7 +8,7 @@ from wtforms import StringField, DateField
 from wtforms import SubmitField
 from wtforms.validators import Length, InputRequired, DataRequired
 from wtforms.validators import Regexp
-
+from wtforms.widgets import TextArea
 
 class FormWTFAjouterDisc(FlaskForm):
     """
@@ -46,6 +46,14 @@ class FormWTFAjouterDisc(FlaskForm):
                                                                                      "d'espace à double, de double "
                                                                                      "apostrophe, de double trait union")
                                                                       ])
+    type_disc_wtf = StringField("Clavioter le type ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                    Regexp(nom_genre_regexp,
+                                                                           message="Pas de chiffres, de caractères "
+                                                                                   "spéciaux, "
+                                                                                   "d'espace à double, de double "
+                                                                                   "apostrophe, de double trait union")
+                                                                    ])
+    image_disc_wtf = StringField("image du disc ", widget=TextArea())
 
 
     submit = SubmitField("Enregistrer disc")
@@ -88,6 +96,15 @@ class FormWTFUpdateDisc(FlaskForm):
                                                                                      "d'espace à double, de double "
                                                                                      "apostrophe, de double trait union")
                                                                       ])
+    type_disc_update_wtf = StringField("Clavioter le type ",
+                                        validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                    Regexp(nom_genre_update_regexp,
+                                                           message="Pas de chiffres, de caractères "
+                                                                   "spéciaux, "
+                                                                   "d'espace à double, de double "
+                                                                   "apostrophe, de double trait union")
+                                                    ])
+    image_disc_update_wtf = StringField("image du disc ", widget=TextArea())
 
     submit = SubmitField("Update disc")
 
@@ -101,7 +118,7 @@ class FormWTFDeleteDisc(FlaskForm):
         submit_btn_conf_del : Bouton de confirmation pour effacer un "genre".
         submit_btn_annuler : Bouton qui permet d'afficher la table "t_person".
     """
-    nom_disc_delete_wtf = StringField("Effacer ce nom")
-    submit_btn_del = SubmitField("Effacer nom")
+    nom_disc_delete_wtf = StringField("Effacer ce disc")
+    submit_btn_del = SubmitField("Effacer disc")
     submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ?")
     submit_btn_annuler = SubmitField("Annuler")

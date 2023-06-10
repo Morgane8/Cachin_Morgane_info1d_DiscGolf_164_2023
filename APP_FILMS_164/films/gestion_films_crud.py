@@ -39,15 +39,19 @@ def film_add_wtf():
                 weight_disc = form_add_film.weight_disc_wtf.data
                 color_disc = form_add_film.color_disc_wtf.data
                 stamp_disc = form_add_film.stamp_disc_wtf.data
+                type_disc = form_add_film.type_disc_wtf.data
+                image_disc = form_add_film.image_disc_wtf.data
 
                 valeurs_insertion_dictionnaire = {"value_label_disc": label_disc,
                                                   "value_weight_disc": weight_disc,
                                                   "value_color_disc": color_disc,
-                                                  "value_stamp_disc": stamp_disc}
+                                                  "value_stamp_disc": stamp_disc,
+                                                  "value_type_disc": type_disc,
+                                                  "value_image_disc": image_disc}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_film = """INSERT INTO t_disc (id_disc, weight_disc, color_disc, stamp_disc, label_disc)
-                VALUES (NULL, %(value_weight_disc)s, %(value_color_disc)s, %(value_stamp_disc)s, %(value_label_disc)s) """
+                strsql_insert_film = """INSERT INTO t_disc (id_disc, weight_disc, color_disc, stamp_disc, label_disc, type_disc, image_disc)
+                VALUES (NULL, %(value_weight_disc)s, %(value_color_disc)s, %(value_stamp_disc)s, %(value_label_disc)s, %(value_type_disc)s, %(value_image_disc)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_film, valeurs_insertion_dictionnaire)
 
@@ -96,20 +100,25 @@ def film_update_wtf():
             weight_disc_update = form_update_film.weight_disc_update_wtf.data
             color_disc_update = form_update_film.color_disc_update_wtf.data
             stamp_disc_update = form_update_film.stamp_disc_update_wtf.data
+            type_disc_update = form_update_film.type_disc_update_wtf.data
+            image_disc_update = form_update_film.image_disc_update_wtf.data
 
             valeur_update_dictionnaire = {"value_id_film": id_film_update,
                                           "value_label_disc_update": label_disc_update,
                                           "value_weight_disc_update": weight_disc_update,
                                           "value_color_disc_update": color_disc_update,
-                                          "value_stamp_disc_update": stamp_disc_update
+                                          "value_stamp_disc_update": stamp_disc_update,
+                                          "value_type_disc_update":type_disc_update,
+                                          "value_image_disc_update": image_disc_update
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
             str_sql_update_nom_film = """UPDATE t_disc SET label_disc = %(value_label_disc_update)s,
                                                             weight_disc = %(value_weight_disc_update)s,
                                                             color_disc = %(value_color_disc_update)s,
-                                                            stamp_disc = %(value_cover_link_film)s,
-                                                            date_sortie_film = %(value_stamp_disc_update)s
+                                                            stamp_disc = %(value_stamp_disc_update)s,
+                                                            type_disc = %(value_type_disc_update)s,
+                                                            image_disc = %(value_image_disc_update)s
                                                             WHERE id_disc = %(value_id_film)s"""
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_nom_film, valeur_update_dictionnaire)
@@ -138,6 +147,8 @@ def film_update_wtf():
             print(f" duree film  ", data_film["duree_film"], "  type ", type(data_film["duree_film"]))
             form_update_film.color_disc_update_wtf.data = data_film["color_disc"]
             form_update_film.stamp_disc_update_wtf.data = data_film["stamp_disc"]
+            form_update_film.type_disc_update_wtf.data = data_film["type_disc"]
+            form_update_film.image_disc_update_wtf.data = data_film["image_disc"]
 
     except Exception as Exception_film_update_wtf:
         raise ExceptionFilmUpdateWtf(f"fichier : {Path(__file__).name}  ;  "

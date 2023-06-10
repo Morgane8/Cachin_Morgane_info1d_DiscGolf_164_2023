@@ -64,7 +64,7 @@ def genres_afficher(order_by, id_person_sel):
                 else:
                     # Dans tous les autres cas, c'est que la table "t_person" est vide.
                     # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
-                    flash(f"Données genres affichés !!", "success")
+                    flash(f"Données personnes affichés !!", "success")
 
         except Exception as Exception_genres_afficher:
             raise ExceptionGenresAfficher(f"fichier : {Path(__file__).name}  ;  "
@@ -101,8 +101,7 @@ def genres_ajouter_wtf():
     if request.method == "POST":
         try:
             if form.validate_on_submit():
-                name_genre_wtf = form.nom_pers_wtf.data
-                last_name_genre = name_genre_wtf.lower()
+                last_name_genre = form.nom_pers_wtf.data
                 first_name_pers = form.prenom_pers_wtf.data
                 birth_date_pers = form.birth_date_pers_wtf.data
                 gender_pers = form.gender_pers_wtf.data
@@ -165,7 +164,6 @@ def genre_update_wtf():
             # Récupèrer la valeur du champ depuis "genre_update_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
             last_name_pers_update = form_update.nom_pers_update_wtf.data
-            last_name_pers_update = last_name_pers_update.lower()
             first_name_pers_update = form_update.prenom_pers_update_wtf.data
             birth_date_pers_update = form_update.birth_date_pers_update_wtf.data
             gender_pers_update = form_update.gender_pers_update_wtf.data
@@ -256,7 +254,7 @@ def genre_delete_wtf():
                 data_films_attribue_genre_delete = session['data_films_attribue_genre_delete']
                 print("data_films_attribue_genre_delete ", data_films_attribue_genre_delete)
 
-                flash(f"Effacer le genre de façon définitive de la BD !!!", "danger")
+                flash(f"Effacer le nom de façon définitive de la BD !!!", "danger")
                 # L'utilisateur vient de cliquer sur le bouton de confirmation pour effacer...
                 # On affiche le bouton "Effacer genre" qui va irrémédiablement EFFACER le genre
                 btn_submit_del = True

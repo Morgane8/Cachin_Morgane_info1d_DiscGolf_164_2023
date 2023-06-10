@@ -47,6 +47,14 @@ class FormWTFAddFilm(FlaskForm):
                                                                                    "d'espace à double, de double "
                                                                                    "apostrophe, de double trait union")
                                                                     ])
+    type_disc_wtf = StringField("Clavioter le type ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                  Regexp(nom_film_regexp,
+                                                                         message="Pas de chiffres, de caractères "
+                                                                                 "spéciaux, "
+                                                                                 "d'espace à double, de double "
+                                                                                 "apostrophe, de double trait union")
+                                                                  ])
+    image_disc_wtf = StringField("image du disc ", widget=TextArea())
 
     submit = SubmitField("Enregistrer film")
 
@@ -90,6 +98,14 @@ class FormWTFUpdateFilm(FlaskForm):
                                                                    "d'espace à double, de double "
                                                                    "apostrophe, de double trait union")
                                                     ])
+    type_disc_update_wtf = StringField("Clavioter le type ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                  Regexp(nom_genre_update_regexp,
+                                                                         message="Pas de chiffres, de caractères "
+                                                                                 "spéciaux, "
+                                                                                 "d'espace à double, de double "
+                                                                                 "apostrophe, de double trait union")
+                                                                  ])
+    image_disc_update_wtf = StringField("image du disc ", widget=TextArea())
     submit = SubmitField("Update disc")
 
 

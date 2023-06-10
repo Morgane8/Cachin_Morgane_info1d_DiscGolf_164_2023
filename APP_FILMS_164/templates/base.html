@@ -56,7 +56,11 @@
 						<!--		Afficher la liste des genres dans l'ordre (ASC) et tous les genres (0)-->
 						<a class="nav-link" href="{{ url_for('plastic_afficher', order_by='ASC', id_plastic_sel=0) }}">Plastic</a>
 					</li>
-					<li class="nav-item dropdown">
+					<li class="nav-item">
+						<!--		Afficher la liste des genres dans l'ordre (ASC) et tous les genres (0)-->
+						<a class="nav-link" href="{{ url_for('films_genres_afficher', id_film_sel=0) }}">Disc/Plastic</a>
+					</li>
+					<!--<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navdropdownfilms" role="button"
 						   data-bs-toggle="dropdown" aria-expanded="false">
 							National license
@@ -84,7 +88,7 @@
 							<li><a class="dropdown-item" href="{{ url_for('mon_premier_wtform') }}">Essai form</a></li>
 							<li><a class="dropdown-item" href="{{ url_for('demo_select_wtf') }}">Essai DROPDOWN</a></li>
 						</ul>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 		</div>

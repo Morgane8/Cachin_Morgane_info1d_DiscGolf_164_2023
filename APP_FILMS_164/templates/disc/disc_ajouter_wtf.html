@@ -39,6 +39,20 @@
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
+					<p>
+						{{ form.type_disc_wtf.label }}<br>
+						{{ form.type_disc_wtf(size=32) }}<br>
+						{% for error in form.type_disc_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.image_disc_wtf.label }}<br>
+						{{ form.image_disc_wtf(size=32) }}<br>
+						{% for error in form.image_disc_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
 				</div>
 				{{ form.submit(class="btn btn-primary") }}
 			</form>

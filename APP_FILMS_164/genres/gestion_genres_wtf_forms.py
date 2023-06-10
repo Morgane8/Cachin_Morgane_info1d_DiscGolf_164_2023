@@ -34,7 +34,7 @@ class FormWTFAjouterGenres(FlaskForm):
     birth_date_pers_wtf = DateField("Date de naissance", validators=[InputRequired("Date obligatoire"),
                                                                                  DataRequired("Date non valide")])
 
-    gender_pers_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    gender_pers_wtf = StringField("Clavioter le genre ", validators=[Length(min=1, max=1, message="min 1 max 1"),
                                                                       Regexp(nom_genre_regexp,
                                                                              message="Pas de chiffres, de caractères "
                                                                                      "spéciaux, "
@@ -80,7 +80,7 @@ class FormWTFUpdateGenre(FlaskForm):
     birth_date_pers_update_wtf = DateField("Date de naissance", validators=[InputRequired("Date obligatoire"),
                                                                      DataRequired("Date non valide")])
 
-    gender_pers_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    gender_pers_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=1, max=1, message="min 1 max 1"),
                                                                      Regexp(nom_genre_update_regexp,
                                                                             message="Pas de chiffres, de caractères "
                                                                                     "spéciaux, "
