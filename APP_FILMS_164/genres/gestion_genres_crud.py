@@ -34,7 +34,7 @@ def genres_afficher(order_by, id_person_sel):
         try:
             with DBconnection() as mc_afficher:
                 if order_by == "ASC" and id_person_sel == 0:
-                    strsql_person_afficher = """SELECT first_name_pers, last_name_pers, birth_date_pers, gender_pers, nationality_pers FROM t_person"""
+                    strsql_person_afficher = """SELECT * FROM t_person"""
                     mc_afficher.execute(strsql_person_afficher)
                 elif order_by == "ASC":
                     # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -192,8 +192,8 @@ def genre_update_wtf():
             return redirect(url_for('genres_afficher', order_by="ASC", id_person_sel=id_person_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT * FROM t_person " \
-                               "WHERE id_person = %(value_id_person)s"
+            str_sql_id_genre = """SELECT first_name_pers, last_name_pers, birth_date_pers, gender_pers, nationality_pers FROM t_person WHERE id_person = %(value_id_person)s"""
+
             valeur_select_dictionnaire = {"value_id_person": id_person_update}
             with DBconnection() as mybd_conn:
                 mybd_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
@@ -297,7 +297,7 @@ def genre_delete_wtf():
                 session['data_films_attribue_genre_delete'] = data_films_attribue_genre_delete
 
                 # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-                str_sql_id_genre = "SELECT * FROM t_person WHERE id_person = %(value_id_person)s"
+                str_sql_id_genre = "SELECT first_name_pers, last_name_pers, birth_date_pers, gender_pers, nationality_pers FROM t_person WHERE id_person = %(value_id_person)s"
 
                 mydb_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
                 # Une seule valeur est suffisante "fetchone()",
