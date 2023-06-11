@@ -34,7 +34,7 @@ def genres_afficher(order_by, id_person_sel):
         try:
             with DBconnection() as mc_afficher:
                 if order_by == "ASC" and id_person_sel == 0:
-                    strsql_person_afficher = """SELECT * FROM t_person"""
+                    strsql_person_afficher = """SELECT first_name_pers, last_name_pers, birth_date_pers, gender_pers, nationality_pers FROM t_person"""
                     mc_afficher.execute(strsql_person_afficher)
                 elif order_by == "ASC":
                     # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -43,11 +43,11 @@ def genres_afficher(order_by, id_person_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_person_selected_dictionnaire = {"value_id_person_selected": id_person_sel}
-                    strsql_person_afficher = """SELECT *  FROM t_person WHERE id_person = %(value_id_person_selected)s"""
+                    strsql_person_afficher = """SELECT first_name_pers, last_name_pers, birth_date_pers, gender_pers, nationality_pers  FROM t_person WHERE id_person = %(value_id_person_selected)s"""
 
                     mc_afficher.execute(strsql_person_afficher, valeur_id_person_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT * FROM t_person"""
+                    strsql_genres_afficher = """SELECT first_name_pers, last_name_pers, birth_date_pers, gender_pers, nationality_pers FROM t_person"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
